@@ -1,0 +1,202 @@
+body {
+  font-family: 'VT323', monospace;
+  background-color: #020876;
+  color: white;
+}
+
+.fi {
+  font-size: 25px;
+}
+#open {
+  cursor: pointer;
+  display: inline-block;
+}
+
+#alertm {
+  display: none;
+  position: fixed;
+  left: 10px;
+  bottom: 10px;
+  background: black;
+  color: white;
+  padding: 12px 12px;
+}
+
+
+#menu {
+  display: none;              /* hidden at first */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #020876;
+  padding: 20px;
+  border: 2px solid white;
+  width: 500px;
+  height: 300px;
+  text-align: center;
+}
+.mm {
+  position: relative;
+}
+.mm button {
+  color: white;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+
+.press {
+  background-color: white;
+  color: #020876;
+  width: 220px;
+  margin-top: 25%;
+  margin-left: 28%;
+}
+
+#alertx {
+  display: none;
+  position: fixed;
+  left: 10px;
+  bottom: 10px;
+  background: black;
+  color: white;
+  padding: 12px 12px;
+}
+#alertt {
+  display: none;
+  position: fixed;
+  left: 10px;
+  bottom: 10px;
+  background: black;
+  color: white;
+  padding: 12px 12px;
+}
+
+.volume {
+  cursor: pointer;
+}
+.color {
+  cursor: pointer;
+}
+
+#barvol {
+    display: none;
+    position: absolute;
+    margin-left: 170px;
+    bottom: 90px;
+}
+
+.vol-container {
+    display: flex;
+    gap: 4px;
+    align-items: flex-end;
+}
+
+.vol-seg {
+    width: 12px;
+    height: 18px;
+    background-color: #ffffff; /* dim/off state */
+    border-radius: 2px;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.vol-seg.active {
+    background-color: #000000; /* bright retro green */
+}
+
+#colors {
+  margin-left: 190px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row; /* horizontal, this is actually default for flex */
+  gap: 12px;
+  display: none;
+  position: absolute;
+  cursor: pointer;
+}
+#colors > div.selected {
+  outline: 3px solid white;
+  outline-offset: 3px;
+}
+
+.s-blue {
+  width: 18px;
+  height: 18px;
+  background-color: #020876;
+  border: 2px solid white;
+}
+.s-pink {
+  width: 18px;
+  height: 18px;
+  background-color: #c73198;
+  border: 2px solid white;
+}
+.s-green {
+  width: 18px;
+  height: 18px;
+  background-color: #4fc731;
+  border: 2px solid white;
+}
+.s-black {
+  width: 18px;
+  height: 18px;
+  background-color: #d4b311;
+  border: 2px solid white;
+}
+
+
+body.blue {
+  background-color: #020876;
+  color: white;
+}
+body.blue #menu {
+  background: #020876;
+}
+body.blue .press {
+  background-color: white;
+  color: #020876;
+}
+
+body.pink {
+  background-color: #c73198;
+  color: white;
+}
+body.pink #menu {
+  background: #c73198;
+}
+body.pink .press {
+  background-color: white;
+  color: #c73198;
+}
+
+
+body.green {
+  background-color: #4fc731;
+  color: white;
+}
+body.green #menu {
+  background: #4fc731;
+}
+body.green .press {
+  background-color: white;
+  color: #4fc731;
+}
+
+
+body.black {
+  background-color: #d4b311;
+  color: white;
+}
+body.black #menu {
+  background: #d4b311;
+}
+body.black .press {
+  background-color: white;
+  color: #d4b311;
+}

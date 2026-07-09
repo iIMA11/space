@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="istyle.css">
+    <title>space</title>
+</head>
+<body>
+    <div class="fi">
+        <h1>Welcome</h1>
+        <h3 id="open">menu</h3>
+
+        <div id="alertm">
+            thats a menu!
+            <br><br>
+        </div>
+        <div id="alertx">
+            menu closed!
+            <br><br>
+        </div>
+        <div id="alertt">
+            TIME! TIME! TIME!
+            <br><br>
+        </div>
+    </div>
+    <div class="mm" id="menu">
+        <h2> --- menu --- </h2>
+        <button id="close">x</button>
+        <h3 id="time"></h3>
+        <h3 class="volume" id="vol">set volume</h3>
+        <h3 class="color" id="col">set color</h3>
+
+        <div id="barvol">
+            <div class="vol-container" id="volContainer">
+                <!-- segments injected by JS -->
+            </div>
+        </div>
+
+        <div id="colors">
+            <div class="s-blue"></div>
+            <div class="s-pink"></div>
+            <div class="s-green"></div>
+            <div class="s-black"></div>
+        </div>
+        <div class="press">
+            <h4>press(&#9650;, &#9660;), then (enter)</h4>
+        </div>
+    </div>
+
+
+    <script>
+        document.getElementById("open").onclick = function () { // open the menu 
+            document.getElementById("menu").style.display = "block";
+        };
+
+        document.getElementById("time").textContent = new Date().toLocaleTimeString([], {
+            hour: "numeric",
+            minute: "2-digit"
+        }).toLowerCase();
+
+        document.getElementById("open").onclick = function () {
+            // Show the menu
+            document.getElementById("menu").style.display = "block";
+            
+            // Show the alert
+            const alertBox = document.getElementById("alertm");
+            alertBox.style.display = "block";
+
+            // Hide the alert after 2 seconds
+            setTimeout(() => {
+                alertBox.style.display = "none";
+            }, 1000);
+        };
+
+        // Close menu (and volume bar) with alert
+        document.getElementById("close").onclick = function () {
+            // Close the menu
+            document.getElementById("menu").style.display = "none";
+
+            // Close the volume bar too
+            document.getElementById("barvol").style.display = "none";
+
+            // Show the close alert
+            const alertBox = document.getElementById("alertx");
+            alertBox.style.display = "block";
+
+            // Hide the alert after 2 seconds
+            setTimeout(() => {
+                alertBox.style.display = "none";
+            }, 1000);
+        };
+
+        // time alert
+        document.getElementById("time").onclick = function () {
+            
+            // Show the alert
+            const alertBox = document.getElementById("alertt");
+            alertBox.style.display = "block";
+
+            // Hide the alert after 2 seconds
+            setTimeout(() => {
+                alertBox.style.display = "none";
+            }, 1000);
+        };
+
+        // volume
+        document.getElementById("vol").onclick = function () {
+
+            const volbar = document.getElementById("barvol");
+            volbar.style.display = "block";
+        }
+
+        const TOTAL_SEGMENTS = 10;
+        let currentVolume = 5; // starting volume level (0–10)
+
+        const volContainer = document.getElementById("volContainer");
+
+        // build the segments once
+        function buildVolumeBar() {
+            volContainer.innerHTML = "";
+            for (let i = 0; i < TOTAL_SEGMENTS; i++) {
+                const seg = document.createElement("div");
+                seg.classList.add("vol-seg");
+                volContainer.appendChild(seg);
+            }
+            updateVolumeDisplay();
+        }
+
+        function updateVolumeDisplay() {
+            const segs = volContainer.querySelectorAll(".vol-seg");
+            segs.forEach((seg, index) => {
+                seg.classList.toggle("active", index < currentVolume);
+            });
+        }
+
+        function increaseVolume() {
+            if (currentVolume < TOTAL_SEGMENTS) currentVolume++;
+            updateVolumeDisplay();
+        }
+
+        function decreaseVolume() {
+            if (currentVolume > 0) currentVolume--;
+            updateVolumeDisplay();
+        }
+
+        buildVolumeBar();
+
+        // ---- shared state ----
+const colorNames = ["blue", "pink", "green", "black"];
+let currentColorIndex = 0;
+
+const barvolEl = document.getElementById("barvol");
+const colorsEl = document.getElementById("colors");
+const swatches = document.querySelectorAll("#colors > div");
+
+// ---- helpers ----
+function showVolume() {
+    colorsEl.style.display = "none";
+    barvolEl.style.display = "block";
+}
+
+function showColors() {
+    barvolEl.style.display = "none";
+    colorsEl.style.display = "flex";
+    highlightColor(currentColorIndex);
+}
+
+function highlightColor(index) {
+    swatches.forEach((s, i) => s.classList.toggle("selected", i === index));
+}
+
+function applyColor(index) {
+    const themeName = colorNames[index];
+    document.body.classList.remove("blue", "pink", "green", "black");
+    document.body.classList.add(themeName);
+}
+
+// ---- open volume ----
+document.getElementById("vol").onclick = function () {
+    showVolume();
+};
+
+// ---- open colors ----
+document.getElementById("col").onclick = function () {
+    showColors();
+};
+
+// ---- click a swatch directly ----
+swatches.forEach(function (swatch, index) {
+    swatch.addEventListener("click", function () {
+        currentColorIndex = index;
+        applyColor(index);
+        highlightColor(index);
+        colorsEl.style.display = "none"; // close after picking, like Enter would
+    });
+});
+
+// ---- close menu (and both sub-panels) ----
+document.getElementById("close").onclick = function () {
+    document.getElementById("menu").style.display = "none";
+    barvolEl.style.display = "none";
+    colorsEl.style.display = "none";
+
+    const alertBox = document.getElementById("alertx");
+    alertBox.style.display = "block";
+    setTimeout(() => { alertBox.style.display = "none"; }, 1000);
+};
+
+// ---- keyboard control for both volume and colors ----
+document.addEventListener("keydown", function (e) {
+    if (barvolEl.style.display === "block") {
+        if (e.key === "ArrowUp") increaseVolume();
+        if (e.key === "ArrowDown") decreaseVolume();
+        if (e.key === "Enter") {
+            barvolEl.style.display = "none";
+        }
+    } else if (colorsEl.style.display === "flex") {
+        if (e.key === "ArrowUp") {
+            currentColorIndex = (currentColorIndex + 1 + colorNames.length) % colorNames.length;
+            highlightColor(currentColorIndex);
+        }
+        if (e.key === "ArrowDown") {
+            currentColorIndex = (currentColorIndex - 1) % colorNames.length;
+            highlightColor(currentColorIndex);
+        }
+        if (e.key === "Enter") {
+            applyColor(currentColorIndex);
+            colorsEl.style.display = "none";
+        }
+    }
+});
+
+
+    </script>
+
+
+</body>
