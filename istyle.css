@@ -7,6 +7,15 @@ body {
 .fi {
   font-size: 25px;
 }
+
+#w::after {
+    content: "|";
+    animation: blink 0.8s infinite;
+}
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
 #open {
   cursor: pointer;
   display: inline-block;
