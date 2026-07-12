@@ -7,7 +7,7 @@
 </head>
 <body>
     <div class="fi">
-        <h1>Welcome</h1>
+        <h1 id="w"></h1>
         <h3 id="open">menu</h3>
 
         <div id="alertm">
@@ -49,6 +49,25 @@
 
 
     <script>
+        function typeText(elementId, text, speed = 60) {
+    const el = document.getElementById(elementId);
+    el.textContent = "";
+    let i = 0;
+
+    function typeChar() {
+        if (i < text.length) {
+            el.textContent += text.charAt(i);
+            i++;
+            setTimeout(typeChar, speed);
+        }
+    }
+
+    typeChar();
+}
+
+// run it on page load
+typeText("w", "Welcome", 100); // 100ms between each letter
+
         document.getElementById("open").onclick = function () { // open the menu 
             document.getElementById("menu").style.display = "block";
         };
